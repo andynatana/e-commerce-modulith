@@ -21,6 +21,7 @@ public interface ProductMapper {
     @Mapping(target = "productId", source = "id")
     @Mapping(target = "description", source ="description.value")
     @Mapping(target = "price", source = "price.value")
+    @Mapping(target = "name", source = "name.value")
     ProductResponseDto toResponseDto(Product product);
 
     default ProductName toProductName(String value) {

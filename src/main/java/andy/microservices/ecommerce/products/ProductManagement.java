@@ -12,6 +12,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ProductManagement {
@@ -30,7 +32,7 @@ public class ProductManagement {
         this.eventPublisher = eventPublisher;
     }
 
-    public void createProduct(ProductRequestDto productRequestDto) {
+    public void fillStock(ProductRequestDto productRequestDto) {
         Product product = productMapper.toEntity(productRequestDto);
         productRepository.save(product);
 
@@ -42,5 +44,12 @@ public class ProductManagement {
         return productRepository.findById(productId)
                 .map(productMapper::toResponseDto)
                 .orElseThrow(() -> new BusinessException("Product does not exist"));
+    }
+
+    public List<ProductResponseDto> getAll() {
+        return productRepository.findAll()
+                .stream()
+                .map(productMapper::toResponseDto)
+                .toList();
     }
 }

@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class ProductManagementTest {
 
@@ -19,7 +17,7 @@ class ProductManagementTest {
 
     @Test
     @Transactional
-    void createProduct() {
-        productManagement.createProduct(new ProductRequestDto("test","test", BigDecimal.ONE, BigInteger.ONE));
+    void fillStock() {
+        productManagement.fillStock(new ProductRequestDto("test","test", BigDecimal.ONE, BigInteger.ONE));
     }
 }
