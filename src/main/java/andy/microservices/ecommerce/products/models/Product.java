@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Product {
 
     @EmbeddedId
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ProductId id;
 
     @Embedded
