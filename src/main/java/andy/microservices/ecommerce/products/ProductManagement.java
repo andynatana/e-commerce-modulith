@@ -1,9 +1,11 @@
 package andy.microservices.ecommerce.products;
 
 import andy.microservices.ecommerce.products.events.ProductAddedEvent;
+import andy.microservices.ecommerce.products.exceptions.BusinessException;
 import andy.microservices.ecommerce.products.mappers.ProductMapper;
 import andy.microservices.ecommerce.products.models.Product;
 import andy.microservices.ecommerce.products.presentation.ProductRequestDto;
+import andy.microservices.ecommerce.products.presentation.ProductResponseDto;
 import andy.microservices.ecommerce.products.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -33,6 +35,12 @@ public class ProductManagement {
         productRepository.save(product);
 
         // add the newly created product into the inventory
-        eventPublisher.publishEvent(new ProductAddedEvent(product.getId()));
+        eventPublisher.publishEvent(new ProductAddedEvent(product.getId(), productRequestDto.quantity().intValue()));
+    }
+
+    public ProductResponseDto getById(Long productId) {
+        return productRepository.findById(productId)
+                .map(productMapper::toResponseDto)
+                .orElseThrow(() -> new BusinessException("Product does not exist"));
     }
 }

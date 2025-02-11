@@ -2,21 +2,19 @@ package andy.microservices.ecommerce.products.models;
 
 import andy.microservices.ecommerce.products.models.vos.Price;
 import andy.microservices.ecommerce.products.models.vos.ProductDescription;
-import andy.microservices.ecommerce.products.models.vos.ProductId;
 import andy.microservices.ecommerce.products.models.vos.ProductName;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Entity
 public class Product {
 
-    @EmbeddedId
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private ProductId id;
+    private Long id;
 
     @Embedded
     @AttributeOverride(name = "name", column = @Column(name = "product_name"))
@@ -30,21 +28,11 @@ public class Product {
     @AttributeOverride(name = "value", column = @Column(name = "price"))
     private Price price;
 
-    private BigInteger quantityInStock;
-
     @CreationTimestamp
     private LocalDateTime creationTimestamp;
 
     @UpdateTimestamp
     private LocalDateTime lastUpdateTimestamp;
-
-    public ProductId getId() {
-        return id;
-    }
-
-    public void setId(ProductId id) {
-        this.id = id;
-    }
 
     public ProductName getName() {
         return name;
@@ -70,14 +58,6 @@ public class Product {
         this.price = price;
     }
 
-    public BigInteger getQuantityInStock() {
-        return quantityInStock;
-    }
-
-    public void setQuantityInStock(BigInteger quantityInStock) {
-        this.quantityInStock = quantityInStock;
-    }
-
     public LocalDateTime getCreationTimestamp() {
         return creationTimestamp;
     }
@@ -92,5 +72,13 @@ public class Product {
 
     public void setLastUpdateTimestamp(LocalDateTime lastUpdateTimestamp) {
         this.lastUpdateTimestamp = lastUpdateTimestamp;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
